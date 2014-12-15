@@ -1,0 +1,43 @@
+@(items: Array[Weibo], tid: Long)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>已完成列表</title>
+        <link href="/assets/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="shortcut icon" type="image/ico" href="/assets/images/favicon.ico">
+    </head>
+    
+    <body>
+        <div class="col-md-2">
+            <a href="labelpage?taskid=@tid"><h3>返回继续标注</h3></a>
+        </div>
+        <table class="table">
+        <thead class="text-center">
+            <tr>
+                <th><p class="text-center">标注序号</p></th>
+                <th><p class="text-center">微博ID</p></th>
+                <th><p class="text-center">微博文本</p></th>
+                <th><p class="text-center">微博图片URL</p></th>
+                <th><p class="text-center">文本情感得分</p></th>
+                <th><p class="text-center">整体情感得分</p></th>
+                <th><p class="text-center">是否相关</p></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(index <- 0 until items.size) {
+                <tr>
+                    <td class="col-md-1"><p class="text-center">@(index+1)</p></td>
+                    <td class="col-md-2"><p class="text-center"><a href="labelpage?taskid=@tid&mid=@items(index).mid">@items(index).mid</a></p></td>
+                    <td class="col-md-5">@items(index).text</td>
+                    <td class="col-md-1">@items(index).image</td>
+                    <td class="col-md-1"><p class="text-center">@items(index).tscore</p></td>
+                    <td class="col-md-1"><p class="text-center">@items(index).ascore</p></td>
+                    <td class="col-md-1"><p class="text-center">@items(index).relevant</p></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </body>
+</html>

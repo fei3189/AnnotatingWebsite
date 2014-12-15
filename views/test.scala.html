@@ -1,0 +1,66 @@
+
+@(taskID: String, finished: Int, total: Int)
+
+<!DOCTYPE html>
+<html lang="en">
+<script>
+var url = "getlabel";
+$('#positive').on('click', function (e) {
+  var posting = $.post( url, { "label" : 1, "mid" : , "withpic"} );
+  posting.done(function( data ) {
+    var content = $( data ).find( "#content" );
+    $( "#result" ).empty().append( content );
+  });
+})
+</script>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>微博情绪标注系统</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/assets/lib/jumbotron-narrow.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="container" >
+      <div class="header">
+        <h3 class="text-muted">欢迎您，姜飞。任务<span>@taskID</span>已完成 <span style="color:red">@finished</span>/@total</h3>
+      </div>
+
+      <div class="jumbotron">
+<div style="padding-bottom:50px;">
+        <p class="lead">【介绍优缺点，你真的会吗？】①谈论优点，不能泛泛而谈，要根据面试职位，有针对性地介绍，让你的优点成为说服别人录取你的充分理由；②说到缺点，可以说一些表面是缺点，实际却是优点的特征，最好能用事例说明；③也可以说一个明显的缺点，但必须举出例子说明你是怎样克服的。</p>
+        <img src="http://ww3.sinaimg.cn/bmiddle/63ee9e7cjw1elm7kl01haj20hs0dcq5h.jpg" 
+   class="img-rounded">
+</div>
+
+<div>
+        <div class="btn-group">
+          <button class="btn btn-default" id="positive">正向</button>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-default" id="negative">负向</button>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-default" id="neutral">中性</button>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-default" id="others">其他</button>
+        </div>
+</div>
+      </div>
+    </div>
+
+  </body>
+</html>
+

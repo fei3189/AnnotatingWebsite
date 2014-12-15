@@ -1,0 +1,200 @@
+
+@(tid: Long, mid: Long, finished: Int, total: Int, text: String, image: String, ltext: Int, lwhole: Int, relevant: Int, reason: String, imagereason: String)
+
+<!DOCTYPE html>
+<html lang="en">
+<script type="text/javascript">
+var textRadio = 0;
+var textImageRadio = 0;
+var relavantRadio = 0;
+function clickRadioText() {
+  textRadio = 1;
+  document.getElementById("imglabel").style.display="";
+  document.getElementById("divascore").style.display="";
+  if (textRadio == 1 && textImageRadio == 1 && relavantRadio == 1) {
+    document.getElementById("result").disabled = false;
+  }
+  
+  var rates = document.getElementsByName('tscore');
+  var rate_value;
+  for(var i = 0; i < rates.length; i++){
+    if(rates[i].checked){
+        rate_value = rates[i].value;
+    }
+  }
+  alert("您的标注为 " + rate_value + ", 参考标注为 " + @ltext + "\n说明：" + "@reason");
+}
+
+function clickRadioTextImage() {
+  textImageRadio = 1;
+  if (textRadio == 1 && textImageRadio == 1 && relavantRadio == 1) {
+    document.getElementById("result").disabled = false;
+  }
+  
+  var rates = document.getElementsByName('ascore');
+  var rate_value;
+  for(var i = 0; i < rates.length; i++){
+    if(rates[i].checked){
+        rate_value = rates[i].value;
+    }
+  }
+  alert("您的标注为 " + rate_value + ", 参考标注为 " + @lwhole + "\n说明：" + "@imagereason");
+  if (@finished >= 20) {
+    alert("样例标注完成，点击下一条进入正式标注！");
+  }
+}
+
+function clickRelavant() {
+  relavantRadio = 1;
+  if (textRadio == 1 && textImageRadio == 1 && relavantRadio == 1) {
+    document.getElementById("result").disabled = false;
+  }
+  var rates = document.getElementsByName('relevant');
+  var rate_value;
+  for(var i = 0; i < rates.length; i++){
+    if(rates[i].checked){
+        rate_value = rates[i].value;
+    }
+  }
+  alert("您的标注为 " + rate_value + ", 参考标注为 " + @relevant);
+}
+
+</script>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" type="image/ico" href="/assets/images/favicon.ico">
+
+    <title>微博情绪标注系统</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/assets/lib/jumbotron-narrow.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="container" >
+      <div class="header">
+        <p class="lead">样例标注已完成 <span style="color:red">@finished</span>/@total</p>
+      </div>
+
+      <div class="jumbotron">
+        <div style="padding-bottom:20px;">
+        <p class="lead">@text</p>
+        <img id="imglabel" style="display:none" src="/assets/images/@image" >
+</div>
+
+<input type="hidden" name="ltext" value = "@ltext">
+<input type="hidden" name="lwhole" value = "@lwhole">
+
+
+
+<div>
+<form class="form-horizontal" role="form" action="example" method="GET">
+
+<div style="margin-top:20px;" id="divrelavant">
+<h4>这条微博是否与”三星电子“有关</h4>
+<label class="radio-inline">
+   <input type="radio" name="relevant" value="1" onclick="clickRelavant();">有关;
+</label>
+<label class="radio-inline">
+   <input type="radio" name="relevant" value="0" onclick="clickRelavant();">无关;
+</label>
+</div>
+
+<div style="margin-top:20px;" class="scorearea" id="divtscore">
+<h4>请选择您对文本的情感打分</h4>
+<label class="radio-inline">
+   <input type="radio" name="tscore" value="-5" onclick="clickRadioText();">-5&nbsp;&nbsp;
+</label>
+<label class="radio-inline">
+   <input type="radio" name="tscore" value="-4" onclick="clickRadioText();">-4&nbsp;&nbsp;
+</label>
+<label class="radio-inline">
+   <input type="radio" name="tscore" value="-3" onclick="clickRadioText();">-3&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="tscore" value="-2" onclick="clickRadioText();">-2&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="tscore" value="-1" onclick="clickRadioText();">-1&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="tscore" value="0" onclick="clickRadioText();">0&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="tscore" value="1" onclick="clickRadioText();">1&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="tscore" value="2" onclick="clickRadioText();">2&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="tscore" value="3" onclick="clickRadioText();">3&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="tscore" value="4" onclick="clickRadioText();">4&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="tscore" value="5" onclick="clickRadioText();">5&nbsp;&nbsp;
+   </label>
+</div>
+
+<div style="margin-top:20px;display:none" id="divascore">
+<h4>请选择您对文本和图片的联合情感打分</h4>
+<label class="radio-inline">
+   <input type="radio" name="ascore" value="-5" onclick="clickRadioTextImage();">-5&nbsp;&nbsp;
+</label>
+<label class="radio-inline">
+   <input type="radio" name="ascore" value="-4" onclick="clickRadioTextImage();">-4&nbsp;&nbsp;
+</label>
+<label class="radio-inline">
+   <input type="radio" name="ascore" value="-3" onclick="clickRadioTextImage();">-3&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="ascore" value="-2" onclick="clickRadioTextImage();">-2&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="ascore" value="-1" onclick="clickRadioTextImage();">-1&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="ascore" value="0" onclick="clickRadioTextImage();">0&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="ascore" value="1" onclick="clickRadioTextImage();">1&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="ascore" value="2" onclick="clickRadioTextImage();">2&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="ascore" value="3" onclick="clickRadioTextImage();">3&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="ascore" value="4" onclick="clickRadioTextImage();">4&nbsp;&nbsp;
+   </label>
+<label class="radio-inline">
+   <input type="radio" name="ascore" value="5" onclick="clickRadioTextImage();">5&nbsp;&nbsp;
+   </label>
+</div>
+<input type="hidden" name="taskid" value = "@tid">
+<input type="hidden" name="mid" value = "@mid">
+<div style="margin-top:20px">
+   <div class="form-group">
+      <div class="col-sm-2 col-sm-offset-5">
+         <button type="submit" id="result" class="btn btn-default center-block" disabled="disabled">下一条</button>
+      </div>
+   </div>
+</div>
+</form>
+</div>
+      </div>
+    </div>
+
+  </body>
+</html>
+
